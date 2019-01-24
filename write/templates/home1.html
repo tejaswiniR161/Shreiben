@@ -1,0 +1,212 @@
+{%extends 'subbase.html'%}
+{%block home1%}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js" >
+</script>
+<style>
+    .space { margin:0; padding:0; height:50px; }    
+
+    #ptext{
+        font-family: cursive;
+    }
+    .imgcl{
+        height: 30px;
+        width: 30px;
+    }
+    
+</style>
+<script>
+        
+    function myFunction()
+    {
+        var doc=new jsPDF();
+        $("#save2").remove();
+        doc.fromHTML($('body').get(0),20,20,{'width':200});
+        
+        
+        html2canvas(document.body, {
+        onrendered: function (canvas) 
+            {
+            var img=canvas.toDataURL("image/png");
+            var doc = new jsPDF();
+            doc.addImage(img,'JPEG',20,20);
+            doc.save('assignment.pdf');
+            }
+       
+                                    });
+    }
+function mainconversion(txt1)
+    {
+        var alpha={'97':'sa','98':'sb','99':'sc','100':'sd','101':'se','102':'sf','103':'sg','104':'sh','105':'si','106':'sj','107':'sk','108':'sl','109':'sm','110':'sn','111':'so','112':'sp','113':'sq','114':'sr','115':'ss','116':'st','117':'su','118':'sv','119':'sw','120':'sx','121':'sy','122':'sz','65':'ba','66':'bb','67':'bc','68':'bd','69':'be','70':'bf','71':'bg','72':'bh','73':'bi','74':'bj','75':'bk','76':'bl','77':'bm','78':'bn','79':'bo','80':'bp','81':'bq','82':'br','83':'bs','84':'bt','85':'bu','86':'bv','87':'bw','88':'bx','89':'by','90':'bz'};
+        
+        $('#cont').remove();
+        
+        
+        
+        for(i=0;i<txt1.length;i++)
+            {
+                code = txt1.charCodeAt(i);
+                if(code>=97&&code<=122)
+                    {
+                        var ul=alpha[code];
+                        console.log(ho[0][ul]);
+                        document.write('<img height="30px" width="30px" class="imgcl" src="'+ho[0][ul]+'"/>');
+                        
+                    //small letters
+                    }
+                else if(code>=65&&code<=90)
+                    {
+                        //big letter
+                        var ul=alpha[code];
+                        console.log(ho[0][ul]);
+                        document.write('<img height="30px" width="30px" class="imgcl" src="'+ho[0][ul]+'"/>');
+                    }
+                   
+                else if(code==32)
+                    {
+                        //space
+                        var img= "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAkElEQVRoQ+2SwQkAMAyEkv2X7g6CUIL9nxDtzpG3R+6YDvmtZEUqIhnoa0liMbYiWJ00rIgkFmMrgtVJw4pIYjG2IlidNKyIJBZjK4LVScOKSGIxtiJYnTSsiCQWYyuC1UnDikhiMbYiWJ00rIgkFmMrgtVJw4pIYjG2IlidNKyIJBZjK4LVScOKSGIx9kyRBxCRADOd5J92AAAAAElFTkSuQmCC";
+                        document.write('<img height="30px" width="30px" class="imgcl" src="'+img+'"/>');
+                    }
+                    
+                else if(code==10)
+                    {
+                        //new line
+                        document.write('</br>');
+                    }
+                    
+                
+            }
+        var r= $('<input id="save2" onclick="myFunction()" type="button" class="btn btn-primary" value="Save in PDF format"/>');
+        $("body").append(r);
+    }
+    
+var ho;
+    
+$(function(){
+    $("#conv").click(function(){
+        var txt1=$('#ptext').val();
+        console.log(txt1);
+        $.ajax({
+            url:"/home/Convert/",
+            type:"post",
+            dataType: 'json',
+            data:{
+                'csrfmiddlewaretoken': '{{ csrf_token }}',
+                'txt':txt1
+            },
+            success:function(d){
+                console.log("done");
+                ho=d;
+                console.log(d);
+                
+                mainconversion(txt1);
+            },
+            error:function(a,b,c){
+                alert("shit... errorrooo... that's too sad.. :'(");
+                console.log(a.responseText);
+            }
+        });
+    });
+    
+    
+});
+</script>
+<script>
+function preview_images() 
+{
+ var total_file=document.getElementById("images").files.length;
+ 
+for(var i=0;i<total_file;i++)
+ {
+  $('#image_preview').append("<div class='col-md-3'><img class='img-thumbnail img-responsive' src='"+URL.createObjectURL(event.target.files[i])+"'></div>");
+ }
+    
+}
+    
+    $(function(){
+        $('#convtotext').click(function(){
+            var formdata = new FormData();
+            var total_file=document.getElementById("images").files.length;
+            var files=document.getElementById("images").files;
+            var file = document.getElementById("images").files[0];
+            console.log(file);
+            console.log(file["image"]);
+           $.ajax({
+               url:"/home/ConvertToText/",
+               type:"post",
+               data:{
+                   'csrfmiddlewaretoken': '{{ csrf_token }}',
+                   'len':total_file
+                   
+               },
+               success:function(d){
+                   alert("success");
+               },
+               error:function(a,b,c){
+                   alert("error");
+               },
+           }); 
+        });
+    });
+</script>
+<div id="cont" class="modal-body row">
+   <div class="col-md-6">
+       <div class="alert alert-info alert-dismissable fade in">
+           Input images from textbooks to convert it to plain text !
+       </div>
+      <!--<input type="file" class="form-control" id="images" name="images[]" onchange="preview_images();" accept="image/*" multiple/>
+       <div class="space"></div>
+       <div class="row" id="image_preview"></div>
+       <div class="space"></div>
+     <button id="convtotext" class="form-control btn-info">Convert to text</button>-->
+       <!--<script>     
+$(function(){
+    
+$("#uploadForm").submit(function(event) {
+alert("its happenin");
+    var formData = new FormData();
+    formData.append("uploadFiles", $('[name="file"]')[0].files[0]);
+    event.stopPropagation();
+    event.preventDefault();
+    $.ajax({
+      url: "ConvertToText/",
+      data: {'formData':formData,'csrfmiddlewaretoken': '{{csrf_token}}'},
+      processData: false,
+      contentType: false,
+      type: 'POST',
+      success: function(data) {
+        alert(data);
+      },
+        error:function(a,b,c){
+            console.log(a.responseText);
+        }
+    });
+    return false;
+  });
+    });
+
+    </script>-->
+       <!--<form id="uploadForm" action="" method="post" enctype="multipart/form-data">   
+           {%csrf_token%}
+        <input type="file" size="45" name="file" id="uploadFiles" accept="image/*"/>
+        <input type="submit" value="Convert to Text" class="btn btn-primary" />
+       </form>-->
+       
+       <form enctype="multipart/form-data" action="/home/addImg/" method="post">
+            {%csrf_token%}
+            {{f.as_p}}
+            <input type="submit" value="submit"/>
+       </form>
+   </div>
+   <div class="col-md-6">
+       <div class="alert alert-info alert-dismissable fade in">
+           Input plain text here to convert it to your handwriting !
+       </div>
+       
+       <textarea class="form-control" rows="22%" id="ptext"></textarea>
+       <button id="conv" class="form-control btn-info">Convert !</button>
+   </div>
+</div>
+
+<button style="visibility: hidden;" class="btn btn-primary" id="save">Save in pdf format</button>
+{%endblock%}
