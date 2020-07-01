@@ -149,11 +149,11 @@ for(var i=0;i<total_file;i++)
         });
     });
 </script>
-<div id="cont" class="modal-body row">
-   <div class="col-md-6">
+<div id="cont" class="container ">
+   <!-- <div class="col-md-6">
        <div class="alert alert-info alert-dismissable fade in">
            Input images from textbooks to convert it to plain text !
-       </div>
+       </div> -->
       <!--<input type="file" class="form-control" id="images" name="images[]" onchange="preview_images();" accept="image/*" multiple/>
        <div class="space"></div>
        <div class="row" id="image_preview"></div>
@@ -192,15 +192,15 @@ alert("its happenin");
         <input type="submit" value="Convert to Text" class="btn btn-primary" />
        </form>-->
        
-       <form enctype="multipart/form-data" action="/home/addImg/" method="post">
+       <!-- <form enctype="multipart/form-data" action="/home/addImg/" method="post">
             {%csrf_token%}
             {{f.as_p}}
             <input type="submit" value="submit"/>
-       </form>
-   </div>
-   <div class="col-md-6">
+       </form> -->
+   <!-- </div> -->
+   <div class="col-md-12">
        <div class="alert alert-info alert-dismissable fade in">
-           Input plain text here to convert it to your handwriting !
+           Input plain text below in the box to convert it to your handwriting !
        </div>
        
        <textarea class="form-control" rows="22%" id="ptext"></textarea>
