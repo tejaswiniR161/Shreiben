@@ -114,3 +114,8 @@ def Output(r):
     u=User.objects.get(username=em)
     hwo=hw.objects.get(uid=u)
     return render(r,'output.html',{'hwo':hwo})
+
+def LogOut(r):
+    del r.session['e']
+    auth_logout(r)
+    return render(r,'login.html')

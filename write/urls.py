@@ -9,6 +9,7 @@ urlpatterns = [
     url(r'^SignUpSave/', views.SignUpSave, name="signupsave"),
     url(r'^SignUp/', views.SignUp, name="signup"),
     url(r'^LogIn/', views.LogIn, name="login"),
+    url(r'^LogOut/', views.LogOut, name="logout"),
     url(r'^AddHandWriting/', views.AddHandWriting, name="addh"),
     url(r'^Convert/', views.Convert, name="conv"),
     url(r'^Output/', views.Output, name="output"),
