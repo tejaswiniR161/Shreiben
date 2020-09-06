@@ -13,7 +13,7 @@ The project can be accessed at: [http://ec2-18-191-126-212.us-east-2.compute.ama
 ## The conversion is as precise as you can write record your handwriting (For security purposes, I've put in dummy handwriting)
 <img height="100%" width="100%" src="/Screenshots/login.JPG"/>
 <br/>
-<img height="100%" width="100%" src="/Screenshots/pre_convert.JPG"/>
+<img height="100%" width="100%" src="/Screenshots/preconvert.JPG"/>
 <br/>
 <img height="100%" width="100%" src="/Screenshots/record_handwriting.JPG"/>
 <br/>
